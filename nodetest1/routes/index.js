@@ -30,12 +30,14 @@ exports.adduser = function(db){
 	return function(req,res){
 		var userName = req.body.username;
 		var userEmail = req.body.useremail;
+		var created= new Date(); //.format("yyyy-MM-dd hh:mm:ss");
 		
 		var collection = db.get('usercollection');
 		
 		collection.insert({
 			"username": userName,
-			"email": userEmail
+			"email": userEmail,
+			"created": created,
 			}
 			,function(err, doc){
 				if (err){
