@@ -1,0 +1,28 @@
+doctype 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/bootstrap-3.0.2/css/bootstrap.min.css')
+    meta(name="description", content="")
+    meta(name="author", content="")
+
+  body
+
+    div(class='container')
+      div(class='header')
+        ul(class="nav nav-pills pull-right")
+          li(class='active')
+            a(href='#') Home
+          li
+            a(href='#') About
+          li
+            a(href='#') Contact
+        h3(class='text-muted') Dawid Koruba web site
+
+      div(class='row')
+        ul(class='nav nav-pills')
+          li(class='active')
+            a(href='/userlist') User list
+
+        block content

@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1.
+        User List
+    p
+        a(href="/newuser") New User
+    ul
+        each user, i in userlist
+            li
+                a(href="mailto:#{user.email}")= user.username
+                span(class="date-created")= user.created.format("yyyy-MM-dd hh:mm:ss")
