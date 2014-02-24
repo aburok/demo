@@ -13,3 +13,11 @@ results
 
 npm-debug.log
 node_modules
+
+packages
+bin
+obj
+.nuget
+*.suo
+*.user
+giles-*
