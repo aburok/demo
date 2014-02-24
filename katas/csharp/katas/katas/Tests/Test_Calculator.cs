@@ -82,5 +82,30 @@ namespace katas.Tests
 
             Assert.AreEqual(1001, sum);
         }
+
+        [Test]
+        public void Add_CustomDelimitersCanHaveAnylength_Correct()
+        {
+            var sum = Calculator.Add("//[***]\n1***2***3");
+
+            Assert.AreEqual(6, sum);
+        }
+
+        [Test]
+        public void Add_CustomDelimitersCanHaveAnylengthMixedDelimiters_Correct()
+        {
+            var sum = Calculator.Add("//[***]\n1***2***3,4\n5");
+
+            Assert.AreEqual(15, sum);
+        }
+
+        [Test]
+        public void Add_MultipleCustomDelimiters_Correct()
+        {
+            var sum = Calculator.Add("//[***][;][%%]\n1***2;3%%4\n5");
+
+            Assert.AreEqual(15, sum);
+
+        }
     }
 }

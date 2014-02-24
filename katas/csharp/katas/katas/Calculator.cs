@@ -22,7 +22,7 @@ namespace katas
 
         private static IEnumerable<int> ParseInput(string input)
         {
-            var delimiters = new List<char> {',', '\n'};
+            var delimiters = new List<string> { ",", "\n" };
             var unparsedNumbers = ParseCustomDelimiter(input, delimiters);
 
             var numbers = ParseNumbers(unparsedNumbers, delimiters);
@@ -31,13 +31,17 @@ namespace katas
 
             numbers = IgnoreNumbersOver1000(numbers);
 
-            return numbers; 
+            return numbers;
         }
 
-        private static IEnumerable<int> ParseNumbers(string unparsedNumbers, List<char> delimiters)
+        private static IEnumerable<int> ParseNumbers(string unparsedNumbers, List<string> delimiters)
         {
-            var strNumbers = unparsedNumbers.Split(delimiters.ToArray());
-            var numbers = strNumbers.Select(int.Parse);
+            var strNumbers = unparsedNumbers.Split(
+                delimiters.ToArray(),
+                StringSplitOptions.RemoveEmptyEntries);
+
+            var numbers = strNumbers.Select(int.Parse).ToList();
+
             return numbers;
         }
 
@@ -57,18 +61,21 @@ namespace katas
             }
         }
 
-        private static string ParseCustomDelimiter(string input, List<char> delimiters)
+        private static string ParseCustomDelimiter(string input, List<string> delimiters)
         {
-            var unparsedNumbers = input;
+            if (!input.StartsWith("//"))
+                return input;
 
-            if (input.StartsWith("//"))
-            {
-                var custom = input.Substring(2).Substring(0, 1);
-                delimiters.Add(custom[0]);
-                unparsedNumbers = input.Substring(4);
-            }
+            var newLineCharPosition = input.IndexOf("\n", StringComparison.Ordinal);
 
-            return unparsedNumbers;
+            var customDelimiters = input
+                .Substring(2, newLineCharPosition - 2)
+                .Trim('[', ']')
+                .Split(new[] { "][" }, StringSplitOptions.None);
+
+            delimiters.AddRange(customDelimiters);
+
+            return input.Substring(newLineCharPosition + 1);
         }
     }
 }
